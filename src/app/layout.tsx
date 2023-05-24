@@ -1,5 +1,7 @@
-import '../styles/globals.css';
-import NunitoFonts from '../../utils/fonts';
+import NunitoFonts from '@/utils/fonts';
+import '@/styles/globals.css';
+
+import NavBar from '@/components/NavBar';
 
 export const metadata = {
   title: 'AP Nail Art',
@@ -17,13 +19,10 @@ export default function RootLayout({
           <div className='gradient' />
         </div>
 
-        <h1 className='head_text text-center'>
-          <span className='orange_gradient text-center'> AP Nail Art </span>
-          <br className='max-md:hidden' />
-          <p className='text-2xl sm:text-3xl'>Gift Card System</p>
-        </h1>
-
-        <main className='app'>{children}</main>
+        <main className='app'>
+          <NavBar />
+          {children}
+        </main>
       </body>
     </html>
   );
