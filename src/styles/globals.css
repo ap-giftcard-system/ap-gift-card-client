@@ -76,11 +76,11 @@
 }
 
 .head_text {
-  @apply mt-24 text-3xl font-extrabold leading-[1.15] text-black sm:text-4xl;
+  @apply pt-9 text-4xl font-extrabold leading-[1.15] text-black sm:text-5xl;
 }
 
 .orange_gradient {
-  @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
 }
 
 .green_gradient {
