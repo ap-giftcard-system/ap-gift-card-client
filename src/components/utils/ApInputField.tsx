@@ -6,6 +6,7 @@ interface PageProps {
   handleOnFieldChange: (e: any) => void;
   placeholder: string;
   note?: boolean;
+  inputRef?: any;
 }
 
 const ApInputField = ({
@@ -16,6 +17,7 @@ const ApInputField = ({
   handleOnFieldChange,
   placeholder,
   note,
+  inputRef,
 }: PageProps) => {
   return (
     <fieldset>
@@ -24,12 +26,15 @@ const ApInputField = ({
       </label>
       <input
         id={id}
+        ref={inputRef}
         type={type}
         value={value}
         onChange={handleOnFieldChange}
         placeholder={placeholder}
         className='ap_input'
         min={0}
+        step={0.01}
+        required={id === 'holderPhone' || id === 'holderEmail' ? false : true}
       />
       {note && (
         <div className='text-xs mt-1 font-bold'>
