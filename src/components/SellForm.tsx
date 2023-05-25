@@ -6,6 +6,7 @@ import ApInputField from './utils/ApInputField';
 import { ApGiftHolder } from '@/utils/interfaces';
 import ApSmallLoader from './utils/ApSmallLoader';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { registerGiftHolder } from '@/api/gift-api';
 
 const SellForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -82,6 +83,37 @@ const SellForm = () => {
 
     // turn isSubmitting on
     setIsSubmitting(true);
+
+    // invoke registerGiftHolder API
+    const res = await registerGiftHolder(apGiftHolder);
+    if (res.error !== null) {
+      // prepare error message
+      let errMsg = '';
+      switch (res.error.key) {
+        case '!DOCUMENT_CONFLICT':
+          errMsg = 'A holder is already registered with this barcode.';
+          break;
+        case '!BAD_REQUEST':
+          errMsg = 'Invalid form input.';
+          break;
+        case '!INTERNAL_SERVER':
+        default:
+          errMsg = 'Unknown server error. Call Logan!!!!';
+      }
+      ApToast('error', errMsg);
+    } else {
+      ApToast('success', 'Successfully registered new gift holder!');
+      setApGiftHolder({
+        giftHolderId: '',
+        barCode: '',
+        holderName: '',
+        holderPhone: '',
+        holderEmail: '',
+        giftAmount: 0,
+        createdAt: '',
+        updatedAt: '',
+      });
+    }
 
     // turn isSubmitting off
     setIsSubmitting(false);
