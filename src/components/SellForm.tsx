@@ -1,5 +1,7 @@
 'use client';
 
+import { Toaster } from 'react-hot-toast';
+import { ApToast } from '@/common/ApToast';
 import ApInputField from './utils/ApInputField';
 import { ApGiftHolder } from '@/utils/interfaces';
 import ApSmallLoader from './utils/ApSmallLoader';
@@ -24,21 +26,25 @@ const SellForm = () => {
     setApGiftHolder((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // prevent reloading
     e.preventDefault();
 
     let isPhoneValid = true;
     let isEmailvalid = true;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const e164Regex = /^\+?\d{4,15}$/;
+    const e164Regex = /^\+?\d{6,15}$/;
     const formattedValue = apGiftHolder.holderPhone.replace(/\D/g, '');
 
-    // make sure both holderPhone and holderEmail cannot be empty
+    // @logic execute contact purposes logic
     if (apGiftHolder.holderPhone === '' && apGiftHolder.holderEmail === '') {
       phoneInputRef.current.focus();
       phoneInputRef.current.style.borderColor = 'red';
       emailInputRef.current.style.borderColor = 'red';
+      ApToast(
+        'error',
+        'Must provide at least phone or email for contact purposes.'
+      );
       return;
     } else if (
       apGiftHolder.holderPhone !== '' &&
@@ -55,9 +61,11 @@ const SellForm = () => {
       isEmailvalid = emailRegex.test(apGiftHolder.holderEmail);
     }
 
+    // show error
     if (!isPhoneValid) {
       phoneInputRef.current.focus();
       phoneInputRef.current.style.borderColor = 'red';
+      ApToast('error', 'Invalid phone number.');
       return;
     } else {
       phoneInputRef.current.style.borderColor = '#e5e7eb'; // gray-200
@@ -66,6 +74,7 @@ const SellForm = () => {
     if (!isEmailvalid) {
       emailInputRef.current.focus();
       emailInputRef.current.style.borderColor = 'red';
+      ApToast('error', 'Invalid email.');
       return;
     } else {
       emailInputRef.current.style.borderColor = '#e5e7eb'; // gray-200
@@ -156,6 +165,9 @@ const SellForm = () => {
           'Submit'
         )}
       </button>
+
+      {/* Toaster */}
+      <Toaster reverseOrder={false} />
     </form>
   );
 };

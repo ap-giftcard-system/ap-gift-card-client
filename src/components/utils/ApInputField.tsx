@@ -32,7 +32,7 @@ const ApInputField = ({
         onChange={handleOnFieldChange}
         placeholder={placeholder}
         className='ap_input'
-        min={0}
+        min={1}
         step={0.01}
         required={id === 'holderPhone' || id === 'holderEmail' ? false : true}
       />
