@@ -19,8 +19,10 @@ export default function RootLayout({
           <div className='gradient' />
         </div>
 
-        <main className='app'>
-          <NavBar />
+        <main className='app relative'>
+          <div className='absolute top-0 w-full'>
+            <NavBar />
+          </div>
           {children}
         </main>
       </body>
