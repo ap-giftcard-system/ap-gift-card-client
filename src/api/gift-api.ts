@@ -1,5 +1,5 @@
 import { OFFICIAL_AP_BACKEND_BASEPATH } from '@/utils/constants';
-import { ApBackendError, ApGiftHolder } from '@/utils/interfaces';
+import { ApBackendObject, ApGiftHolder } from '@/utils/interfaces';
 
 export const registerGiftHolder = async (apGiftHolder: ApGiftHolder) => {
   try {
@@ -18,9 +18,9 @@ export const registerGiftHolder = async (apGiftHolder: ApGiftHolder) => {
       { method: 'POST', body: JSON.stringify(body) }
     );
 
-    return (await res.json()) as ApBackendError;
+    return (await res.json()) as ApBackendObject;
   } catch (error) {
     console.error(error);
-    return { error } as ApBackendError;
+    return { error } as ApBackendObject;
   }
 };

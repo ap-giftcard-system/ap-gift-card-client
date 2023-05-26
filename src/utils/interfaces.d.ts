@@ -31,6 +31,6 @@ export interface ApGiftHolder {
 /**
  * @notice interface contains information related to Error object from backend server
  */
-export interface ApBackendError {
+export interface ApBackendObject {
   error: null | { key: string; msg: string };
 }
