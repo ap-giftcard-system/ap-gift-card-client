@@ -49,7 +49,9 @@ const LoginForm = () => {
     } else {
       setLoginFormdata({ adminUsername: '', adminPassword: '' });
       Cookies.set('SESSIONID', res.accessToken as string);
+      Cookies.set('_isAuth', 'true');
       router.push('/sell');
+      router.refresh();
     }
 
     // turn isSubmitting off
