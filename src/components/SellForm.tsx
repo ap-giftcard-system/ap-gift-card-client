@@ -5,8 +5,8 @@ import { ApToast } from '@/common/ApToast';
 import ApInputField from './utils/ApInputField';
 import { ApGiftHolder } from '@/utils/interfaces';
 import ApSmallLoader from './utils/ApSmallLoader';
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { registerGiftHolder } from '@/api/gift-api';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 
 const SellForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

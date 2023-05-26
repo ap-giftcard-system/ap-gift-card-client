@@ -28,7 +28,7 @@ const NavLinks = () => {
   return (
     <>
       {isAuth && (
-        <div className='flex gap-1 sm:gap-3 md:gap-9 tracking-tight'>
+        <div className='flex gap-1 sm:gap-3 md:gap-9 tracking-tight font-semibold'>
           {NAV_LINKS.map((item) => (
             <Link
               key={item.title}
