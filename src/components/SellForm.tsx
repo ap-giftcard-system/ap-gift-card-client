@@ -97,7 +97,12 @@ const SellForm = () => {
         case '!BAD_REQUEST':
           errMsg = 'Invalid form input.';
           break;
-        case '!INTERNAL_SERVER':
+        case '!ACCESS_TOKEN':
+          if (res.error.msg === 'Cannot parse auth JWT.') {
+            errMsg =
+              'Authorization expired. Try to refresh the page and log back in.';
+          }
+          break;
         default:
           errMsg = 'Unknown server error. Call Logan!!!!';
       }
