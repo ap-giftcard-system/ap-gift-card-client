@@ -9,9 +9,10 @@ import { registerGiftHolder } from '@/api/gift-api';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 
 const SellForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const phoneInputRef = useRef<any>();
   const emailInputRef = useRef<any>();
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [apGiftHolder, setApGiftHolder] = useState<ApGiftHolder>({
     giftHolderId: '',
     barCode: '',
@@ -102,7 +103,7 @@ const SellForm = () => {
       }
       ApToast('error', errMsg);
     } else {
-      ApToast('success', 'Successfully registered new gift holder!');
+      setIsSuccessful(true);
       setApGiftHolder({
         giftHolderId: '',
         barCode: '',
@@ -120,87 +121,106 @@ const SellForm = () => {
   };
 
   useEffect(() => {
-    if (apGiftHolder.holderPhone === '' || apGiftHolder.holderEmail === '') {
-      phoneInputRef.current.style.borderColor = '#e5e7eb'; // gray-200
-      emailInputRef.current.style.borderColor = '#e5e7eb'; // gray-200
+    if (phoneInputRef.current && emailInputRef.current) {
+      if (apGiftHolder.holderPhone === '' || apGiftHolder.holderEmail === '') {
+        phoneInputRef.current.style.borderColor = '#e5e7eb'; // gray-200
+        emailInputRef.current.style.borderColor = '#e5e7eb'; // gray-200
+      }
     }
   }, [apGiftHolder.holderPhone, apGiftHolder.holderEmail]);
 
   return (
-    <form onSubmit={handleOnSubmit} className='flex flex-col gap-6 sm:w-96'>
-      {/* barcode */}
-      <ApInputField
-        id='barCode'
-        title='Barcode'
-        type='text'
-        value={apGiftHolder.barCode}
-        handleOnFieldChange={handleOnFieldChange}
-        placeholder='Barcode...'
-      />
+    <>
+      {isSuccessful ? (
+        <div className='flex flex-col justify-center items-center'>
+          <p className='text-xl font-semibold'>
+            New Gift Holder successfully registered.
+          </p>
+          <button
+            type='submit'
+            onClick={() => setIsSuccessful(false)}
+            className='mt-3 px-5 py-2 text-lg border-1 transition ease-in-out duration-300 border-amber-400 hover:bg-amber-400 rounded-lg text-black hover:text-white font-semibold shadow-lg'
+          >
+            Acknowledge.
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleOnSubmit} className='flex flex-col gap-6 sm:w-96'>
+          {/* barcode */}
+          <ApInputField
+            id='barCode'
+            title='Barcode'
+            type='text'
+            value={apGiftHolder.barCode}
+            handleOnFieldChange={handleOnFieldChange}
+            placeholder='Barcode...'
+          />
 
-      {/* giftAmount */}
-      <ApInputField
-        id='giftAmount'
-        title='Gift Amount'
-        type='number'
-        value={apGiftHolder.giftAmount}
-        handleOnFieldChange={handleOnFieldChange}
-        placeholder=''
-      />
+          {/* giftAmount */}
+          <ApInputField
+            id='giftAmount'
+            title='Gift Amount'
+            type='number'
+            value={apGiftHolder.giftAmount}
+            handleOnFieldChange={handleOnFieldChange}
+            placeholder=''
+          />
 
-      {/* holderName */}
-      <ApInputField
-        id='holderName'
-        title='Holder Name'
-        type='text'
-        value={apGiftHolder.holderName}
-        handleOnFieldChange={handleOnFieldChange}
-        placeholder="Gift holder's name..."
-      />
+          {/* holderName */}
+          <ApInputField
+            id='holderName'
+            title='Holder Name'
+            type='text'
+            value={apGiftHolder.holderName}
+            handleOnFieldChange={handleOnFieldChange}
+            placeholder="Gift holder's name..."
+          />
 
-      {/* holderPhone */}
-      <ApInputField
-        id='holderPhone'
-        inputRef={phoneInputRef}
-        title='Holder Phone'
-        type='text'
-        value={apGiftHolder.holderPhone}
-        handleOnFieldChange={handleOnFieldChange}
-        placeholder='(319)-883-2322 or 3198832322'
-        note={true}
-      />
+          {/* holderPhone */}
+          <ApInputField
+            id='holderPhone'
+            inputRef={phoneInputRef}
+            title='Holder Phone'
+            type='text'
+            value={apGiftHolder.holderPhone}
+            handleOnFieldChange={handleOnFieldChange}
+            placeholder='(319)-883-2322 or 3198832322'
+            note={true}
+          />
 
-      {/* holderEmail */}
-      <ApInputField
-        id='holderEmail'
-        inputRef={emailInputRef}
-        title='Holder Email'
-        type='text'
-        value={apGiftHolder.holderEmail}
-        handleOnFieldChange={handleOnFieldChange}
-        placeholder="Gift holder's email"
-        note={true}
-      />
+          {/* holderEmail */}
+          <ApInputField
+            id='holderEmail'
+            inputRef={emailInputRef}
+            title='Holder Email'
+            type='text'
+            value={apGiftHolder.holderEmail}
+            handleOnFieldChange={handleOnFieldChange}
+            placeholder="Gift holder's email"
+            note={true}
+          />
 
-      {/* Submit button */}
-      <button
-        type='submit'
-        disabled={isSubmitting}
-        className='mt-3 px-5 py-2 text-lg border-1 transition ease-in-out duration-300 border-teal-400 hover:bg-green-400 rounded-lg text-black hover:text-white font-bold shadow-lg'
-      >
-        {isSubmitting ? (
-          <div className='flex gap-2 justify-center items-center'>
-            <p>Processing...</p>
-            <ApSmallLoader />
-          </div>
-        ) : (
-          'Submit'
-        )}
-      </button>
+          {/* Submit button */}
+          <button
+            type='submit'
+            disabled={isSubmitting}
+            className='mt-3 px-5 py-2 text-lg border-1 transition ease-in-out duration-300 border-teal-400 hover:bg-green-400 rounded-lg text-black hover:text-white font-bold shadow-lg'
+          >
+            {isSubmitting ? (
+              <div className='flex gap-2 justify-center items-center'>
+                <p>Processing...</p>
+                <ApSmallLoader />
+              </div>
+            ) : (
+              'Submit'
+            )}
+          </button>
 
-      {/* Toaster */}
-      <Toaster reverseOrder={false} />
-    </form>
+          {/* Toaster */}
+          <Toaster reverseOrder={false} />
+        </form>
+      )}
+    </>
   );
 };
 export default SellForm;
