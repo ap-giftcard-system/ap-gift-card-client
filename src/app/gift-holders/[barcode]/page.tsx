@@ -1,18 +1,15 @@
 'use client';
 
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { ApGiftHolder } from '@/utils/interfaces';
 import { getApGiftHolders } from '@/api/holders-api';
 import { ApToast } from '@/components/common/ApToast';
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import ConvertDateString, {
   beautifyE164PhoneNumber,
   beautifyUSD,
 } from '@/utils/converter';
-import { ApGiftHolder } from '@/utils/interfaces';
-import { useEffect, useState } from 'react';
-import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
-import { RiUserSmileLine } from 'react-icons/ri';
-import { HiOutlineDevicePhoneMobile } from 'react-icons/hi2';
-import { HiOutlineMail } from 'react-icons/hi';
-import Link from 'next/link';
 
 interface PageProps {
   params: {
@@ -70,11 +67,11 @@ const GiftHolder = ({ params: { barcode } }: PageProps) => {
     );
 
   return (
-    <section className='w-full sm:w-[27rem] mt-20 mb-16 sm:mb-24 sm:gap-9 sm:mt-32'>
+    <section className='w-full h-screen flex justify-center items-center sm:w-[27rem]'>
       {/* wrapper */}
       <div className='w-full flex flex-col gap-9 border-1 border-gray-300 rounded-lg bg-white p-2 shadow-lg'>
         {/* header - barcode */}
-        <h2 className='pt-3 text-3xl font-bold leading-[1.15] text-black sm:text-4xl text-center'>
+        <h2 className='pt-6 text-3xl font-bold leading-[1.15] text-black sm:text-4xl text-center'>
           {barcode}
         </h2>
         <hr className='bg-[rgba(256,256,256,0.3)]' />
@@ -82,7 +79,7 @@ const GiftHolder = ({ params: { barcode } }: PageProps) => {
         {/* price actions*/}
         <div className='flex flex-col gap-3'>
           {/* price */}
-          <p className='text-2xl sm:text-4xl font-semibold text-center'>
+          <p className='text-2xl sm:text-4xl font-semibold text-center whitespace-nowrap overflow-hidden overflow-ellipsis'>
             {beautifyUSD(holder.giftAmount)}
           </p>
 
@@ -99,7 +96,7 @@ const GiftHolder = ({ params: { barcode } }: PageProps) => {
         <hr className='bg-[rgba(256,256,256,0.3)]' />
 
         {/* contact information */}
-        <div className='flex flex-col font-semibold text-lg justify-center'>
+        <div className='pb-6 flex flex-col font-semibold text-lg justify-center'>
           {/* name */}
           <div className='flex justify-between'>
             <p className='whitespace-nowrap overflow-hidden overflow-ellipsis'>
