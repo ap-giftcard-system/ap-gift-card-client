@@ -15,7 +15,7 @@ const SearchBar = ({ searchValue, setSearchValue }: PageProps) => {
         type={'text'}
         value={searchValue as string}
         handleOnFieldChange={(e) => setSearchValue!(e.target.value)}
-        placeholder={'Search gift holder by bar code...'}
+        placeholder={'Search gift holder by bar code, name, email or phone...'}
       />
 
       {/* @TODO: add search by name or search by email or search by phone feature */}
