@@ -108,7 +108,7 @@ const LoginForm = () => {
         </button>
 
         {/* Toaster */}
-        <Toaster reverseOrder={false} />
+        <Toaster />
       </form>
     </>
   );

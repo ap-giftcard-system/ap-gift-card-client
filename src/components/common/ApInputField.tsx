@@ -7,6 +7,7 @@ interface PageProps {
   placeholder: string;
   note?: boolean;
   inputRef?: any;
+  lightShadow?: boolean;
 }
 
 const ApInputField = ({
@@ -18,6 +19,7 @@ const ApInputField = ({
   placeholder,
   note,
   inputRef,
+  lightShadow,
 }: PageProps) => {
   return (
     <fieldset>
@@ -33,7 +35,7 @@ const ApInputField = ({
         value={value}
         onChange={handleOnFieldChange}
         placeholder={placeholder}
-        className='ap_input'
+        className={`ap_input ${lightShadow && '!shadow-md'}`}
         min={1}
         step={0.01}
         required={id === 'holderPhone' || id === 'holderEmail' ? false : true}

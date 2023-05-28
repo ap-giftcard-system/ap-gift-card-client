@@ -221,7 +221,7 @@ const SellForm = () => {
           </button>
 
           {/* Toaster */}
-          <Toaster reverseOrder={false} />
+          <Toaster />
         </form>
       )}
     </>
