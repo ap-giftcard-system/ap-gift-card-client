@@ -99,8 +99,7 @@ const SellForm = () => {
           break;
         case '!ACCESS_TOKEN':
           if (res.error.msg === 'Cannot parse auth JWT.') {
-            errMsg =
-              'Authorization expired. Try to refresh the page and log back in.';
+            errMsg = 'Authorization expired. Try logging out and log back in.';
           }
           break;
         default:

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { checkJWTExpiration } from '@/utils/jwtChecker';
 
 export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('SESSIONID')?.value;
@@ -14,11 +13,6 @@ export async function middleware(request: NextRequest) {
   // if no accessToken, redirect to /
   if (!accessToken && pathname !== '/') {
     return NextResponse.redirect(new URL('/', request.url));
-  }
-
-  // logout if access token is expired
-  if (checkJWTExpiration(accessToken as string)) {
-    return NextResponse.redirect(new URL('/logout', request.url));
   }
 }
 
