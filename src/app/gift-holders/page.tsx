@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
-import { getAllHolders } from '@/api/holders-api';
+import { getApGiftHolders } from '@/api/holders-api';
 import { ApGiftHolder } from '@/utils/interfaces';
 import { ApToast } from '@/components/common/ApToast';
 import SearchBar from '@/components/holders/SearchBar';
@@ -15,7 +15,7 @@ const GiftHoldersPage = () => {
   // fetch holders
   useEffect(() => {
     (async () => {
-      const res = await getAllHolders();
+      const res = await getApGiftHolders();
 
       // handle error
       if (res.error) {

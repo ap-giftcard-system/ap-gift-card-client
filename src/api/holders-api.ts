@@ -5,14 +5,16 @@ import Cookies from 'js-cookie';
 /**
  * @dev get a list of all holders
  */
-export const getAllHolders = async () => {
+export const getApGiftHolders = async (barcode?: string) => {
   try {
     // prepare auth token
     const authToken = Cookies.get('SESSIONID');
 
     // fetch find-gift-holders API
     const res = await fetch(
-      `${OFFICIAL_AP_BACKEND_BASEPATH}/gift/holder/find-gift-holders`,
+      `${OFFICIAL_AP_BACKEND_BASEPATH}/gift/holder/find-gift-holders${
+        barcode ? `?barCode=${barcode}` : ''
+      }`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
