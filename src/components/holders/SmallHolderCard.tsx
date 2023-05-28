@@ -28,19 +28,19 @@ const SmallHolderCard = ({ holder }: { holder: ApGiftHolder }) => {
     >
       {/* barcode */}
       <div className='flex justify-between items-center'>
-        <p className='text-lg font-bold text-center whitespace-nowrap overflow-hidden overflow-ellipsis'>
+        <p className='text-lg font-bold text-center whitespace-nowrap overflow-hidden overflow-ellipsis text-amber-500'>
           {holder.barCode}
         </p>
 
         {/* gift amount */}
-        <p className='text-lg font-semibold text-center whitespace-nowrap overflow-hidden overflow-ellipsis'>
+        <p className='text-lg font-bold text-center whitespace-nowrap overflow-hidden overflow-ellipsis'>
           {beautifyUSD(holder.giftAmount)}
         </p>
       </div>
       <hr className='bg-[rgba(256,256,256,0.3)]' />
 
       {/* contact information */}
-      <div className='flex flex-col font-semibold'>
+      <div className='flex flex-col font-bold'>
         {/* name */}
         <div className='flex gap-1 items-center'>
           <RiUserSmileLine size={20} />
@@ -53,6 +53,7 @@ const SmallHolderCard = ({ holder }: { holder: ApGiftHolder }) => {
             <HiOutlineDevicePhoneMobile size={20} />
             <Link
               href={`tel:${holder.holderPhone}`}
+              onClick={(e) => e.stopPropagation()}
               className='hover:underline'
             >
               {beautifyE164PhoneNumber(holder.holderPhone)}
@@ -66,6 +67,7 @@ const SmallHolderCard = ({ holder }: { holder: ApGiftHolder }) => {
             <HiOutlineMail size={20} />
             <Link
               href={`mailto:${holder.holderEmail}`}
+              onClick={(e) => e.stopPropagation()}
               className='hover:underline'
             >
               {holder.holderEmail}
