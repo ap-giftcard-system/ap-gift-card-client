@@ -4,14 +4,14 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-const page = () => {
+const Logout = () => {
   const router = useRouter();
   useEffect(() => {
     Cookies.remove('SESSIONID');
     Cookies.remove('_isAuth');
     router.push('/');
     router.refresh();
-  }, []);
+  }, [router]);
 
   return (
     <div className='pt-40 text-lg font-semibold'>
@@ -22,4 +22,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Logout;

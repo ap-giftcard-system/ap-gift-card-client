@@ -1,7 +1,6 @@
-import NunitoFonts from '@/utils/fonts';
 import '@/styles/globals.css';
-
-import NavBar from '@/components/NavBar';
+import NunitoFonts from '@/utils/fonts';
+import NavBar from '@/components/navbar/NavBar';
 
 export const metadata = {
   title: 'AP Nail Art',

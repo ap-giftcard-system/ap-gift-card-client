@@ -1,4 +1,4 @@
-import SellForm from '@/components/SellForm';
+import SellForm from '@/components/sell/SellForm';
 
 const SellPage = () => {
   return (
