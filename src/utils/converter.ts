@@ -22,12 +22,14 @@ export const beautifyUSD = (giftAmount: number) => {
  * @returns string
  */
 export const beautifyE164PhoneNumber = (phoneNumber: string) => {
-  const cleanedNumber = phoneNumber.replace(/\D/g, ''); // Remove non-digit characters
-  const countryCode = cleanedNumber.slice(0, 2); // Extract country code
-  const areaCode = cleanedNumber.slice(2, 5); // Extract area code
-  const mainNumber = cleanedNumber.slice(5); // Extract main number
+  const countryCode = phoneNumber.slice(0, 2); // Extract country code
+  const areaCode = phoneNumber.slice(2, 5); // Extract area code
+  const mainNumberA = phoneNumber.slice(5, 8); // Extract main number
+  const mainNumberB = phoneNumber.slice(8); // Extract main number
 
-  return `+${countryCode} (${areaCode}) ${mainNumber}`;
+  return `${countryCode} (${areaCode})-${mainNumberA}${
+    mainNumberB ? `-${mainNumberB}` : ``
+  }`;
 };
 
 /**
