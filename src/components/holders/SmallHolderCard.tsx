@@ -7,11 +7,23 @@ import ConvertDateString, {
 import { RiUserSmileLine } from 'react-icons/ri';
 import { HiOutlineDevicePhoneMobile } from 'react-icons/hi2';
 import { HiOutlineMail } from 'react-icons/hi';
+import { useRouter } from 'next/navigation';
 
 const SmallHolderCard = ({ holder }: { holder: ApGiftHolder }) => {
+  const router = useRouter();
+
+  const handleClick = (e: any) => {
+    if (window && (e.metaKey || e.ctrlKey)) {
+      window.open(`/gift-holders/${holder.barCode}`);
+    } else {
+      router.push(`/gift-holders/${holder.barCode}`);
+    }
+  };
+
   return (
     <div
-      className='border-1 border-gray-300 rounded-lg bg-white p-2 shadow-lg flex flex-col gap-3
+      onClick={handleClick}
+      className='border-1 border-gray-300 rounded-lg bg-white p-2 shadow-lg flex flex-col gap-3 transition-all transform hover:-translate-y-1 hover:cursor-pointer
                 h-[12rem]'
     >
       {/* barcode */}
@@ -52,7 +64,10 @@ const SmallHolderCard = ({ holder }: { holder: ApGiftHolder }) => {
         {holder.holderEmail && (
           <div className='flex gap-1 items-center'>
             <HiOutlineMail size={20} />
-            <Link href={`mailto:${holder.holderEmail}`}>
+            <Link
+              href={`mailto:${holder.holderEmail}`}
+              className='hover:underline'
+            >
               {holder.holderEmail}
             </Link>
           </div>
