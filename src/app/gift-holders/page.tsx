@@ -51,7 +51,7 @@ const GiftHoldersPage = () => {
       </div>
 
       {/* list of holders */}
-      <ul className='flex flex-col gap-3 mt-6'>
+      <ul className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-6'>
         {apGiftHolders &&
           apGiftHolders.map((holder) => (
             <li key={holder.barCode}>
