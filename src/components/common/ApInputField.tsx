@@ -1,6 +1,6 @@
 interface PageProps {
   id: string;
-  title: string;
+  title?: string;
   type: string;
   value: string | number;
   handleOnFieldChange: (e: any) => void;
@@ -21,9 +21,11 @@ const ApInputField = ({
 }: PageProps) => {
   return (
     <fieldset>
-      <label htmlFor={id} className='font-bold text-lg'>
-        {title}:
-      </label>
+      {title && (
+        <label htmlFor={id} className='font-bold text-lg'>
+          {title}:
+        </label>
+      )}
       <input
         id={id}
         ref={inputRef}
