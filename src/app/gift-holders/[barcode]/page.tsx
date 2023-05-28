@@ -34,7 +34,7 @@ const GiftHolder = ({ params: { barcode } }: PageProps) => {
   // fetch gift holder by barcode
   useEffect(() => {
     (async () => {
-      const res = await getApGiftHolders();
+      const res = await getApGiftHolders(barcode);
 
       // handle error
       if (res.error) {
@@ -146,6 +146,14 @@ const GiftHolder = ({ params: { barcode } }: PageProps) => {
               {ConvertDateString(holder.createdAt, 'long')}
             </p>
           </div>
+        </div>
+        <hr className='bg-[rgba(256,256,256,0.3)]' />
+
+        {/* delete holder */}
+        <div className='mx-auto pb-6'>
+          <button className='flex gap-1 text-lg font-bold items-center px-3 py-1 border-1 transition duration-200 border-red-500 justify-center rounded-lg text-red-500 hover:bg-red-400 hover:text-white'>
+            Remove Holder
+          </button>
         </div>
       </div>
     </section>
