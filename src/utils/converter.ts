@@ -39,10 +39,12 @@ export const beautifyE164PhoneNumber = (phoneNumber: string) => {
  *
  * @returns string
  */
-export const ConvertDateString = (date: string) => {
+export const ConvertDateString = (date: string, mode?: 'long' | 'short') => {
   const dateObject = new Date(date);
 
-  return dateObject.toLocaleDateString();
+  return mode === 'long'
+    ? dateObject.toLocaleString()
+    : dateObject.toLocaleDateString();
 };
 
 export default ConvertDateString;
