@@ -2,6 +2,7 @@
 import { getAllHolders } from '@/api/holders-api';
 import { ApToast } from '@/components/common/ApToast';
 import SearchBar from '@/components/holders/SearchBar';
+import SmallHolderCard from '@/components/holders/SmallHolderCard';
 import useDebounce from '@/hooks/useDebounce';
 import { ApGiftHolder } from '@/utils/interfaces';
 import { SetStateAction, useEffect, useState } from 'react';
@@ -42,9 +43,22 @@ const GiftHoldersPage = () => {
       <h1 className='head_text orange_gradient text-center'>Gift Holders</h1>
 
       {/* search bar */}
-      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+      <div className='flex flex-col gap-1'>
+        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+        <small className='w-fit text-sm font-semibold ml-auto pr-1'>
+          {apGiftHolders.length} holders
+        </small>
+      </div>
 
       {/* list of holders */}
+      <ul className='flex flex-col gap-3 mt-6'>
+        {apGiftHolders &&
+          apGiftHolders.map((holder) => (
+            <li key={holder.barCode}>
+              <SmallHolderCard holder={holder} />
+            </li>
+          ))}
+      </ul>
     </section>
   );
 };
