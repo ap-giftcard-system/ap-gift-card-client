@@ -144,8 +144,8 @@ const SellForm = () => {
     <>
       {isSuccessful ? (
         <div className='flex flex-col justify-center items-center'>
-          <p className='text-xl font-semibold'>
-            New Gift Holder successfully registered.
+          <p className='text-xl font-semibold text-center'>
+            New Holder successfully registered.
           </p>
           <button
             type='submit'

@@ -225,7 +225,7 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
     );
 
   return (
-    <section className='w-full h-screen flex justify-center items-center sm:w-[27rem]'>
+    <section className='w-full min-h-screen my-20 sm:my-0 flex justify-center items-center sm:w-[27rem]'>
       {/* wrapper */}
       <div className='w-full flex flex-col gap-9 border-1 border-gray-300 rounded-lg bg-white p-2 shadow-lg'>
         {/* header - barCodeParam */}
