@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
-import { useEffect, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
 import { ApToast } from '@/components/common/ApToast';
 import ApInputField from '@/components/common/ApInputField';
 import { ApBackendObject, ApGiftHolder } from '@/utils/interfaces';
@@ -12,6 +12,7 @@ import ConvertDateString, {
   beautifyE164PhoneNumber,
   beautifyUSD,
 } from '@/utils/converter';
+import ApAlertDialog from '@/components/common/ApAlertDialog';
 
 interface PageProps {
   params: {
@@ -21,14 +22,17 @@ interface PageProps {
 
 const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
   // local states
-  const [mounted, setMoutned] = useState(false);
   const updatedAmountRef = useRef<any>();
+  const [mounted, setMoutned] = useState(false);
+  const [newAmount, setNewAmount] = useState('');
+  const [isRemoveAlertOpen, setIsRemoveAlertOpen] = useState(false);
+  const [isIncreaseAlertOpen, setIsIncreaseAlertOpen] = useState(false);
+  const [isDecreaseAlertOpen, setIsDecreaseAlertOpen] = useState(false);
+  const [priceActions, setPriceActions] = useState(false);
   const [isLoading, setIsLoading] = useState({
     decrease: false,
     increase: false,
   });
-  const [newAmount, setNewAmount] = useState('');
-  const [priceActions, setPriceActions] = useState(false);
   const [holder, setHolders] = useState<ApGiftHolder>({
     giftHolderId: '',
     barCode: '',
@@ -40,15 +44,29 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
     updatedAt: '',
   });
 
-  // handle amount update submit
-  const handleUpdateAmountSubmit = async (mode: 'increase' | 'decrease') => {
-    // ApToast error if newAmount is empty
-    if ((newAmount === '' || newAmount === '0') && updatedAmountRef) {
+  // handle empty input toast
+  const handleGiftAmountBtnClicked = (mode: 'increase' | 'decrease') => {
+    if (
+      ((newAmount === '' || newAmount === '0') &&
+        updatedAmountRef &&
+        updatedAmountRef.current) ||
+      isDecreaseAlertOpen ||
+      isIncreaseAlertOpen
+    ) {
       ApToast('error', 'Please enter a new gift amount.');
       updatedAmountRef.current.focus();
       return;
     }
 
+    if (mode === 'increase') {
+      setIsIncreaseAlertOpen(true);
+    } else {
+      setIsDecreaseAlertOpen(true);
+    }
+  };
+
+  // handle amount update submit
+  const handleUpdateAmountSubmit = async (mode: 'increase' | 'decrease') => {
     // prepare api response
     let res: ApBackendObject = {} as ApBackendObject;
 
@@ -195,7 +213,9 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
               <div className='flex gap-3 justify-center items-center text-lg font-semibold'>
                 {/* Decrease */}
                 <button
-                  onClick={() => handleUpdateAmountSubmit('decrease')}
+                  onClick={() => {
+                    handleGiftAmountBtnClicked('decrease');
+                  }}
                   className='flex w-32 gap-1 items-center px-2 border-1 transition duration-200 border-indigo-400 justify-center rounded-lg text-indigo-400 hover:bg-indigo-400 hover:text-white'
                 >
                   Decrease
@@ -212,7 +232,9 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
 
                 {/* Increase */}
                 <button
-                  onClick={() => handleUpdateAmountSubmit('increase')}
+                  onClick={() => {
+                    handleGiftAmountBtnClicked('increase');
+                  }}
                   className='flex w-32 gap-1 items-center px-2 border-1 transition duration-200 border-green-400 justify-center rounded-lg text-green-400 hover:bg-green-400 hover:text-white'
                 >
                   Increase{' '}
@@ -306,11 +328,52 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
 
         {/* delete holder */}
         <div className='mx-auto pb-6'>
-          <button className='flex gap-1 text-lg font-bold items-center px-3 py-1 border-1 transition duration-200 border-red-500 justify-center rounded-lg text-red-500 hover:bg-red-400 hover:text-white'>
+          <button
+            onClick={() => setIsRemoveAlertOpen(true)}
+            className='flex gap-1 text-lg font-bold items-center px-3 py-1 border-1 transition duration-200 border-red-500 justify-center rounded-lg text-red-500 hover:bg-red-400 hover:text-white'
+          >
             Remove Holder
           </button>
         </div>
       </div>
+
+      {/* Alert Dialog */}
+      {isRemoveAlertOpen && (
+        <ApAlertDialog
+          isOpen={isRemoveAlertOpen}
+          setIsOpen={setIsRemoveAlertOpen}
+          alertTitle={'Remove holder'}
+          alertMsg={'Are you sure you want to remove this holder?'}
+          confirmBtnTitle={'Aknowledge.'}
+          confirmCallBack={async () => alert('sad')}
+        />
+      )}
+      {/* Alert Dialog */}
+      {isDecreaseAlertOpen && (
+        <ApAlertDialog
+          isOpen={isDecreaseAlertOpen}
+          setIsOpen={setIsDecreaseAlertOpen}
+          alertTitle={'Decrease gift amount'}
+          alertMsg={`Are you sure you want to decrease the amount by $${Number(
+            Number(newAmount).toFixed(2)
+          )} for this holder?`}
+          confirmBtnTitle={'Confirm.'}
+          confirmCallBack={() => handleUpdateAmountSubmit('decrease')}
+        />
+      )}
+      {/* Alert Dialog */}
+      {isIncreaseAlertOpen && (
+        <ApAlertDialog
+          isOpen={isIncreaseAlertOpen}
+          setIsOpen={setIsIncreaseAlertOpen}
+          alertTitle={'Increase gift amount'}
+          alertMsg={`Are you certain about increasing the amount by $${Number(
+            Number(newAmount).toFixed(2)
+          )} for this holder?`}
+          confirmBtnTitle={'Confirm.'}
+          confirmCallBack={() => handleUpdateAmountSubmit('increase')}
+        />
+      )}
 
       {/* toaster */}
       <Toaster />
