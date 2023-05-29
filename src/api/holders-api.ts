@@ -41,7 +41,7 @@ export const updateApGiftHolder = async (updatedHolder: ApGiftHolder) => {
     // prepare auth token
     const authToken = Cookies.get('SESSIONID');
 
-    // fetch find-gift-holders API
+    // path update holder API
     const res = await fetch(
       `${OFFICIAL_AP_BACKEND_BASEPATH}/gift/holder/update`,
       {
@@ -50,6 +50,34 @@ export const updateApGiftHolder = async (updatedHolder: ApGiftHolder) => {
         },
         body: JSON.stringify(updatedHolder),
         method: 'PATCH',
+      }
+    );
+
+    return (await res.json()) as ApBackendObject;
+  } catch (error) {
+    console.error(error);
+    return { error } as ApBackendObject;
+  }
+};
+
+/**
+ * @dev remove/delete holder by holderId
+ *
+ * @param holderId string
+ */
+export const removeApGiftHolder = async (holderId: string) => {
+  try {
+    // prepare auth token
+    const authToken = Cookies.get('SESSIONID');
+
+    // fetch find-gift-holders API
+    const res = await fetch(
+      `${OFFICIAL_AP_BACKEND_BASEPATH}/gift/holder/delete?holderId=${holderId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+        method: 'DELETE',
       }
     );
 
