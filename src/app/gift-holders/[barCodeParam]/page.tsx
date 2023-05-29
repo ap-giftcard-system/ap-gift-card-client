@@ -213,7 +213,7 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
       }
     })();
     setMoutned(true);
-  }, []);
+  }, [barCodeParam]);
 
   if (!mounted)
     return (
