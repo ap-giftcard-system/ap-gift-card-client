@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import NunitoFonts from '@/utils/fonts';
 import NavBar from '@/components/navbar/NavBar';
+import { ChakraProviders } from '@/libs/providers';
 
 export const metadata = {
   title: 'AP Nail Art',
@@ -14,16 +15,18 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={NunitoFonts.className}>
-        <div className='main'>
-          <div className='gradient' />
-        </div>
-
-        <main className='app relative'>
-          <div className='absolute top-0 w-full'>
-            <NavBar />
+        <ChakraProviders>
+          <div className='main'>
+            <div className='gradient' />
           </div>
-          {children}
-        </main>
+
+          <main className='app relative'>
+            <div className='absolute top-0 w-full'>
+              <NavBar />
+            </div>
+            {children}
+          </main>
+        </ChakraProviders>
       </body>
     </html>
   );
