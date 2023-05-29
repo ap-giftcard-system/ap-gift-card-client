@@ -2,17 +2,22 @@
 
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
-import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { ApToast } from '@/components/common/ApToast';
 import ApInputField from '@/components/common/ApInputField';
+import ApAlertDialog from '@/components/common/ApAlertDialog';
 import { ApBackendObject, ApGiftHolder } from '@/utils/interfaces';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
-import { getApGiftHolders, updateApGiftHolder } from '@/api/holders-api';
+import {
+  getApGiftHolders,
+  removeApGiftHolder,
+  updateApGiftHolder,
+} from '@/api/holders-api';
 import ConvertDateString, {
   beautifyE164PhoneNumber,
   beautifyUSD,
 } from '@/utils/converter';
-import ApAlertDialog from '@/components/common/ApAlertDialog';
 
 interface PageProps {
   params: {
@@ -22,16 +27,18 @@ interface PageProps {
 
 const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
   // local states
+  const router = useRouter();
   const updatedAmountRef = useRef<any>();
   const [mounted, setMoutned] = useState(false);
   const [newAmount, setNewAmount] = useState('');
+  const [priceActions, setPriceActions] = useState(false);
   const [isRemoveAlertOpen, setIsRemoveAlertOpen] = useState(false);
   const [isIncreaseAlertOpen, setIsIncreaseAlertOpen] = useState(false);
   const [isDecreaseAlertOpen, setIsDecreaseAlertOpen] = useState(false);
-  const [priceActions, setPriceActions] = useState(false);
   const [isLoading, setIsLoading] = useState({
     decrease: false,
     increase: false,
+    remove: false,
   });
   const [holder, setHolders] = useState<ApGiftHolder>({
     giftHolderId: '',
@@ -143,6 +150,43 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
       // turn udpate off
       setPriceActions(false);
     }
+  };
+
+  // handle remove gift holder
+  const handleRemoveApGiftHolder = async () => {
+    // turn isLoading.remove on
+    setIsLoading((prev) => ({ ...prev, remove: true }));
+
+    // invoke removeApGiftHolder() API
+    const res = await removeApGiftHolder(holder.giftHolderId);
+
+    // handle error
+    if (res.error) {
+      let errMsg = '';
+      switch (res.error.key) {
+        case '!ACCESS_TOKEN':
+          if (res.error.msg === 'Cannot parse auth JWT.') {
+            errMsg = 'Authorization expired. Try logging out and log back in.';
+          }
+          break;
+        default:
+          errMsg = 'Unknown server error. Call Logan!!!!';
+      }
+      // toast error
+      ApToast('error', errMsg);
+    } else {
+      // toast success
+      ApToast('success', 'Successfully removed gift holder.');
+
+      // turn udpate off
+      setPriceActions(false);
+
+      // redirect user back to /gift-holders
+      router.push('/gift-holders');
+    }
+
+    // turn isLoading.remove off
+    setIsLoading((prev) => ({ ...prev, remove: false }));
   };
 
   // fetch gift holder by barCodeParam
@@ -333,6 +377,11 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
             className='flex gap-1 text-lg font-bold items-center px-3 py-1 border-1 transition duration-200 border-red-500 justify-center rounded-lg text-red-500 hover:bg-red-400 hover:text-white'
           >
             Remove Holder
+            {isLoading.decrease && (
+              <div
+                className={`animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-400`}
+              />
+            )}
           </button>
         </div>
       </div>
@@ -345,7 +394,7 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
           alertTitle={'Remove holder'}
           alertMsg={'Are you sure you want to remove this holder?'}
           confirmBtnTitle={'Aknowledge.'}
-          confirmCallBack={async () => alert('sad')}
+          confirmCallBack={handleRemoveApGiftHolder}
         />
       )}
       {/* Alert Dialog */}

@@ -1,6 +1,6 @@
+import Cookies from 'js-cookie';
 import { OFFICIAL_AP_BACKEND_BASEPATH } from '@/utils/constants';
 import { ApBackendObject, ApGiftHolder } from '@/utils/interfaces';
-import Cookies from 'js-cookie';
 
 /**
  * @dev get a list of all holders
