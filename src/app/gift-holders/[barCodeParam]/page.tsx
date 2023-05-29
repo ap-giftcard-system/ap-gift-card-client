@@ -15,11 +15,11 @@ import ConvertDateString, {
 
 interface PageProps {
   params: {
-    barcode: string;
+    barCodeParam: string;
   };
 }
 
-const GiftHolder = ({ params: { barcode } }: PageProps) => {
+const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
   // local states
   const [mounted, setMoutned] = useState(false);
   const updatedAmountRef = useRef<any>();
@@ -127,10 +127,10 @@ const GiftHolder = ({ params: { barcode } }: PageProps) => {
     }
   };
 
-  // fetch gift holder by barcode
+  // fetch gift holder by barCodeParam
   useEffect(() => {
     (async () => {
-      const res = await getApGiftHolders(barcode);
+      const res = await getApGiftHolders(barCodeParam);
 
       // handle error
       if (res.error) {
@@ -166,9 +166,9 @@ const GiftHolder = ({ params: { barcode } }: PageProps) => {
     <section className='w-full h-screen flex justify-center items-center sm:w-[27rem]'>
       {/* wrapper */}
       <div className='w-full flex flex-col gap-9 border-1 border-gray-300 rounded-lg bg-white p-2 shadow-lg'>
-        {/* header - barcode */}
+        {/* header - barCodeParam */}
         <h2 className='pt-6 text-3xl font-bold leading-[1.15] text-black sm:text-4xl text-center'>
-          {barcode}
+          {barCodeParam}
         </h2>
         <hr className='bg-[rgba(256,256,256,0.3)]' />
 
