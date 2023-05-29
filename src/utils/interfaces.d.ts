@@ -33,6 +33,7 @@ export interface ApGiftHolder {
  */
 export interface ApBackendObject {
   apGiftHolder?: ApGiftHolder[];
+  updatedApGiftHolder?: ApGiftHolder;
   accessToken?: '';
   error: null | { key: string; msg: string };
 }
