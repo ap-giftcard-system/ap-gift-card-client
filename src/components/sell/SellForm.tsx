@@ -7,8 +7,10 @@ import ApSmallLoader from '../common/ApSmallLoader';
 import { registerGiftHolder } from '@/api/gift-api';
 import { ApToast } from '@/components/common/ApToast';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const SellForm = () => {
+  const router = useRouter();
   const phoneInputRef = useRef<any>();
   const emailInputRef = useRef<any>();
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -108,20 +110,25 @@ const SellForm = () => {
       ApToast('error', errMsg);
     } else {
       setIsSuccessful(true);
-      setApGiftHolder({
-        giftHolderId: '',
-        barCode: '',
-        holderName: '',
-        holderPhone: '',
-        holderEmail: '',
-        giftAmount: 0,
-        createdAt: '',
-        updatedAt: '',
-      });
     }
 
     // turn isSubmitting off
     setIsSubmitting(false);
+  };
+
+  // handle successfullyAddedHolder
+  const successfullyAddedHolder = () => {
+    router.push(`/gift-holders/${apGiftHolder.barCode}`);
+    setApGiftHolder({
+      giftHolderId: '',
+      barCode: '',
+      holderName: '',
+      holderPhone: '',
+      holderEmail: '',
+      giftAmount: 0,
+      createdAt: '',
+      updatedAt: '',
+    });
   };
 
   useEffect(() => {
@@ -142,7 +149,7 @@ const SellForm = () => {
           </p>
           <button
             type='submit'
-            onClick={() => setIsSuccessful(false)}
+            onClick={successfullyAddedHolder}
             className='mt-3 px-5 py-2 text-lg border-1 transition ease-in-out duration-300 border-amber-400 hover:bg-amber-400 rounded-lg text-black hover:text-white font-semibold shadow-lg'
           >
             Acknowledge.
