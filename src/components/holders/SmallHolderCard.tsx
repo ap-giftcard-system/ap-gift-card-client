@@ -1,13 +1,13 @@
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { HiOutlineMail } from 'react-icons/hi';
+import { RiUserSmileLine } from 'react-icons/ri';
 import { ApGiftHolder } from '@/utils/interfaces';
+import { HiOutlineDevicePhoneMobile } from 'react-icons/hi2';
 import ConvertDateString, {
   beautifyE164PhoneNumber,
   beautifyUSD,
 } from '@/utils/converter';
-import { RiUserSmileLine } from 'react-icons/ri';
-import { HiOutlineDevicePhoneMobile } from 'react-icons/hi2';
-import { HiOutlineMail } from 'react-icons/hi';
-import { useRouter } from 'next/navigation';
 
 const SmallHolderCard = ({ holder }: { holder: ApGiftHolder }) => {
   const router = useRouter();

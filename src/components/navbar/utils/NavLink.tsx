@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import { NAV_LINKS } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
+import { NAV_LINKS } from '@/utils/constants';
 
 const NavLinks = () => {
   const router = useRouter();

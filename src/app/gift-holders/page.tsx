@@ -1,8 +1,8 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
-import { getApGiftHolders } from '@/api/holders-api';
 import { ApGiftHolder } from '@/utils/interfaces';
+import { useEffect, useMemo, useState } from 'react';
+import { getApGiftHolders } from '@/api/holders-api';
 import { ApToast } from '@/components/common/ApToast';
 import SearchBar from '@/components/holders/SearchBar';
 import SmallHolderCard from '@/components/holders/SmallHolderCard';
