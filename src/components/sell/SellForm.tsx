@@ -143,16 +143,27 @@ const SellForm = () => {
   return (
     <>
       {isSuccessful ? (
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex flex-col justify-center items-center mt-6'>
           <p className='text-xl font-semibold text-center'>
             New Holder successfully registered.
           </p>
           <button
             type='submit'
             onClick={successfullyAddedHolder}
-            className='mt-3 px-5 py-2 text-lg border-1 transition ease-in-out duration-300 border-amber-400 hover:bg-amber-400 rounded-lg text-black hover:text-white font-semibold shadow-lg'
+            className='w-52 mt-3 px-5 py-2 text-lg border-1 transition ease-in-out duration-300 border-amber-400 hover:bg-amber-400 rounded-lg text-black hover:text-white font-semibold shadow-lg'
           >
-            Acknowledge.
+            View new holder.
+          </button>
+          <button
+            type='submit'
+            onClick={() => {
+              if (window) {
+                window.location.reload();
+              }
+            }}
+            className='w-52 mt-3 px-5 py-2 text-lg border-1 transition ease-in-out duration-300 border-amber-400 hover:bg-amber-400 rounded-lg text-black hover:text-white font-semibold shadow-lg'
+          >
+            Sell another.
           </button>
         </div>
       ) : (

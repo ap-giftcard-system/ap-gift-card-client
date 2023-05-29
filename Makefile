@@ -24,3 +24,7 @@ production:
 	yarn start
 
 production-clean: clean production
+
+push-gitlab:
+	@echo Pushing production Ap Client app to gitlab
+	git push gitlab main
