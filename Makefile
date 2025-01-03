@@ -25,6 +25,10 @@ production:
 
 production-clean: clean production
 
+add-gitlab-remote:
+    @echo Adding Gitlab Remote
+	git remote add gitlab https://gitlab.com/quiet-node/ap-gift-card-client
+
 push-gitlab:
 	@echo Pushing production Ap Client app to gitlab
 	git push gitlab main
