@@ -8,6 +8,7 @@ import { registerGiftHolder } from '@/api/gift-api';
 import { ApToast } from '@/components/common/ApToast';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 
 const SellForm = () => {
   const router = useRouter();
@@ -17,7 +18,7 @@ const SellForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apGiftHolder, setApGiftHolder] = useState<ApGiftHolder>({
     giftHolderId: '',
-    barCode: '',
+    barCode: uuidv4().slice(0, 18),
     holderName: '',
     holderPhone: '',
     holderEmail: '',
@@ -121,7 +122,7 @@ const SellForm = () => {
     router.push(`/gift-holders/${apGiftHolder.barCode}`);
     setApGiftHolder({
       giftHolderId: '',
-      barCode: '',
+      barCode: uuidv4().slice(0, 18),
       holderName: '',
       holderPhone: '',
       holderEmail: '',
@@ -175,7 +176,8 @@ const SellForm = () => {
             type='text'
             value={apGiftHolder.barCode}
             handleOnFieldChange={handleOnFieldChange}
-            placeholder='Barcode...'
+            placeholder=''
+            disabled={true}
           />
 
           {/* giftAmount */}
