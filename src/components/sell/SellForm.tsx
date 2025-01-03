@@ -18,7 +18,7 @@ const SellForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apGiftHolder, setApGiftHolder] = useState<ApGiftHolder>({
     giftHolderId: '',
-    barCode: uuidv4().slice(0, 18),
+    barCode: uuidv4().slice(0, 12),
     holderName: '',
     holderPhone: '',
     holderEmail: '',
@@ -122,7 +122,7 @@ const SellForm = () => {
     router.push(`/gift-holders/${apGiftHolder.barCode}`);
     setApGiftHolder({
       giftHolderId: '',
-      barCode: uuidv4().slice(0, 18),
+      barCode: uuidv4().slice(0, 12),
       holderName: '',
       holderPhone: '',
       holderEmail: '',
