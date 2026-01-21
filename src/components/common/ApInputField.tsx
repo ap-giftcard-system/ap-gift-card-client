@@ -43,7 +43,11 @@ const ApInputField = ({
         min={1}
         step={0.01}
         disabled={disabled}
-        required={id === 'holderPhone' || id === 'holderEmail' ? false : true}
+        required={
+          id === 'holderPhone' || id === 'holderEmail' || id === 'giftedBy'
+            ? false
+            : true
+        }
       />
       {note && (
         <div className='text-xs mt-1 font-bold'>

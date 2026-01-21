@@ -10,7 +10,7 @@ The **AP Gift Card Client** is a frontend application designed to interact with 
 
 - [git](https://git-scm.com/)
 - [node.js](https://nodejs.org/)
-- [yarn](https://yarnpkg.com/)
+- [bun](https://bun.sh/)
 
 ### Set up environment variables
 
@@ -21,7 +21,7 @@ At the root of the directory, create a `.env` file using `.env.example` as the t
 1. Install all dependencies:
 
    ```bash
-   yarn
+   bun install
    ```
 
 2. Start the project in development mode using the `Make` script:

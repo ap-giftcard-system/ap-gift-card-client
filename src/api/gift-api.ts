@@ -11,9 +11,12 @@ export const registerGiftHolder = async (apGiftHolder: ApGiftHolder) => {
     const body = {
       barcode: apGiftHolder.barCode,
       holderName: apGiftHolder.holderName,
-      holderPhone: '+1' + apGiftHolder.holderPhone.replace(/\D/g, ''),
+      holderPhone: apGiftHolder.holderPhone
+        ? '+1' + apGiftHolder.holderPhone.replace(/\D/g, '')
+        : '',
       holderEmail: apGiftHolder.holderEmail,
       giftAmount: Number(apGiftHolder.giftAmount),
+      giftedBy: apGiftHolder.giftedBy || '',
     };
 
     // fetch registerAPI in the backend
@@ -25,7 +28,7 @@ export const registerGiftHolder = async (apGiftHolder: ApGiftHolder) => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      }
+      },
     );
 
     return (await res.json()) as ApBackendObject;

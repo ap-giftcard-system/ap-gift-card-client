@@ -13,6 +13,8 @@
  *
  * @param giftAmount - number
  *
+ * @param giftedBy - string
+ *
  * @param createdAt - string
  *
  * @param updatedAt - string
@@ -24,6 +26,7 @@ export interface ApGiftHolder {
   holderPhone: string;
   holderEmail: string;
   giftAmount: number;
+  giftedBy?: string;
   createdAt: string;
   updatedAt: string;
 }

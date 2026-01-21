@@ -47,6 +47,7 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
     holderPhone: '',
     holderEmail: '',
     giftAmount: 0,
+    giftedBy: '',
     createdAt: '',
     updatedAt: '',
   });
@@ -358,6 +359,18 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
             </div>
           )}
 
+          {/* gifted by */}
+          {holder.giftedBy && (
+            <div className='flex justify-between'>
+              <p className='whitespace-nowrap overflow-hidden overflow-ellipsis'>
+                Gift From:{' '}
+              </p>
+              <p className='whitespace-nowrap overflow-hidden overflow-ellipsis'>
+                {holder.giftedBy}
+              </p>
+            </div>
+          )}
+
           {/* date added */}
           <div className='flex justify-between'>
             <p className='whitespace-nowrap overflow-hidden overflow-ellipsis'>
@@ -404,7 +417,7 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
           setIsOpen={setIsDecreaseAlertOpen}
           alertTitle={'Decrease gift amount'}
           alertMsg={`Are you sure you want to decrease the amount by $${Number(
-            Number(newAmount).toFixed(2)
+            Number(newAmount).toFixed(2),
           )} for this holder?`}
           confirmBtnTitle={'Confirm.'}
           confirmCallBack={() => handleUpdateAmountSubmit('decrease')}
@@ -417,7 +430,7 @@ const GiftHolder = ({ params: { barCodeParam } }: PageProps) => {
           setIsOpen={setIsIncreaseAlertOpen}
           alertTitle={'Increase gift amount'}
           alertMsg={`Are you certain about increasing the amount by $${Number(
-            Number(newAmount).toFixed(2)
+            Number(newAmount).toFixed(2),
           )} for this holder?`}
           confirmBtnTitle={'Confirm.'}
           confirmCallBack={() => handleUpdateAmountSubmit('increase')}

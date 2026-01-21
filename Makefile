@@ -8,20 +8,20 @@ clean:
 	@echo Purging node_modules...
 	@rm -fr node_modules
 	@echo Reinstalling dependencies modules...
-	yarn
+	bun
 
 .PHONY: dev
 dev:
-	yarn dev
+	bun dev
 
 dev-clean: clean dev
 
 .PHONY: production
 production:
 	@echo Building production AP client app...
-	yarn build
+	bun run build
 	@echo Starting production AP client app...
-	yarn start
+	bun start
 
 production-clean: clean production
 

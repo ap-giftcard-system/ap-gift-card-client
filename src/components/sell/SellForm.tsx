@@ -23,6 +23,7 @@ const SellForm = () => {
     holderPhone: '',
     holderEmail: '',
     giftAmount: 0,
+    giftedBy: '',
     createdAt: '',
     updatedAt: '',
   });
@@ -48,7 +49,7 @@ const SellForm = () => {
       emailInputRef.current.style.borderColor = 'red';
       ApToast(
         'error',
-        'Must provide at least phone or email for contact purposes.'
+        'Must provide at least phone or email for contact purposes.',
       );
       return;
     } else if (
@@ -198,6 +199,16 @@ const SellForm = () => {
             value={apGiftHolder.holderName}
             handleOnFieldChange={handleOnFieldChange}
             placeholder="Gift holder's name..."
+          />
+
+          {/* giftedBy */}
+          <ApInputField
+            id='giftedBy'
+            title='Gift From (Optional)'
+            type='text'
+            value={apGiftHolder.giftedBy || ''}
+            handleOnFieldChange={handleOnFieldChange}
+            placeholder='Who is giving this gift? Leave blank for self-purchase...'
           />
 
           {/* holderPhone */}

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { HiOutlineMail } from 'react-icons/hi';
+import { HiOutlineGift, HiOutlineMail } from 'react-icons/hi';
 import { RiUserSmileLine } from 'react-icons/ri';
 import { ApGiftHolder } from '@/utils/interfaces';
 import { HiOutlineDevicePhoneMobile } from 'react-icons/hi2';
@@ -72,6 +72,14 @@ const SmallHolderCard = ({ holder }: { holder: ApGiftHolder }) => {
             >
               {holder.holderEmail}
             </Link>
+          </div>
+        )}
+
+        {/* gifted by */}
+        {holder.giftedBy && (
+          <div className='flex gap-1 items-center'>
+            <HiOutlineGift size={20} />
+            <p className='text-base'>{holder.giftedBy}</p>
           </div>
         )}
       </div>
